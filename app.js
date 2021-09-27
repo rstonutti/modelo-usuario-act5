@@ -7,12 +7,13 @@ const app = express()
 
 //Middlewares
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 
 //Settings
 app.set('port', process.env.PORT || 3000);
 
 //Routes
 app.use('/api', require('./routes/usuario.routes'));
+app.use('/api/auth', require('./routes/auth.routes'));
 
-app.listen(app.get('port'), ()=> console.log(`Servidor en el puerto ${app.get('port')}`));
+app.listen(app.get('port'), () => console.log(`Servidor corriendo en el puerto ${app.get('port')}`));
