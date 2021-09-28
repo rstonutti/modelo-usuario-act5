@@ -5,7 +5,7 @@ const bcryptjs = require('bcryptjs');
 
 const Usuario = require('../models/Usuario');
 
-
+//Controlador para logearse
 const login = async (req = request, res = response) => {
 
     const { nombre, contrasenia } = req.body;

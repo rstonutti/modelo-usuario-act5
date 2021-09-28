@@ -5,12 +5,16 @@ const ctrlUsuario = {};
 
 const Usuario = require('../models/Usuario.js');
 
+//Controlador para ver un usuario con su ID de MongoDB en los parámetros.
 ctrlUsuario.getUser = async (req = request, res = response) => {
     const { id } = req.params;
     try {
-        const usuario = await Usuario.findById(id);
-        const inactivo = await Usuario.findOne({ $and: [{ id }, { estado: false }] })
 
+        //Busco el usuario con dicho ID.
+        const usuario = await Usuario.findById(id);
+
+        //Verifico que el usuario este activo.
+        const inactivo = await Usuario.findOne({ $and: [{ id }, { estado: false }] })
         if (inactivo) {
             return res.json({
                 msg: `El usuario ${usuario.nombre} no existe`
@@ -25,11 +29,11 @@ ctrlUsuario.getUser = async (req = request, res = response) => {
     }
 };
 
+//Controlador para crear usuarios.
 ctrlUsuario.createUser = async (req = request, res = response) => {
     const { nombre, correo, contrasenia, rol } = req.body;
 
     try {
-
         const usuario = new Usuario({ nombre, correo, contrasenia, rol });
 
         //NOTA: Puse el nombre y correo en una misma validación por probar el or... Despues me diran si es mejor separarlo para especificar por separado cual ese el repetido.
@@ -57,12 +61,12 @@ ctrlUsuario.createUser = async (req = request, res = response) => {
     };
 };
 
+//Controlador para modificar información de los usuarios con el ID de MongoDB en los parámetros.
 ctrlUsuario.editUser = async (req = request, res = response) => {
     const { id } = req.params;
     const { _id, contrasenia, correo, ...resto } = req.body;
 
     try {
-
         //Validar contra db
         if (contrasenia) {
             const salt = bcryptjs.genSaltSync();
@@ -81,14 +85,14 @@ ctrlUsuario.editUser = async (req = request, res = response) => {
     }
 };
 
+//Controlador para modificar el estado de los usuarios con el ID de MongoDB en los parámetros.
 ctrlUsuario.deleteUser = async (req = request, res = response) => {
     const { id } = req.params;
     try {
-
+        //Verifico que el usuario este activo
         const inactivo = await Usuario.findOne({ $and: [{ id }, { estado: false }] });
 
         /* console.log(inactivo) */
-
         if (inactivo) {
             return res.json({
                 msg: `El usuario ${id} no existe`

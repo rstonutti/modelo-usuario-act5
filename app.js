@@ -1,4 +1,5 @@
 const express = require('express');
+const morgan = require('morgan');
 require('dotenv').config();
 
 require('./database/connection.js')
@@ -8,6 +9,7 @@ const app = express()
 //Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(morgan('dev'));
 
 //Settings
 app.set('port', process.env.PORT || 3000);

@@ -19,6 +19,9 @@ const {
 const {validarJWT} = require('../middlewares/validarJWT.js');
 const {adminRole, tieneRole} = require('../middlewares/validarRoles.js'); */
 
+//Para evitar hacer las 3 exportaciones de arriba que vienen de la misma carpeta, se optimiza el codigo para
+//realizar una sola exportacion que apunta a un index de forma implicita.
+
 const {
     validarCampos,
     validarJWT,
