@@ -14,8 +14,7 @@ ctrlUsuario.getUser = async (req = request, res = response) => {
         const usuario = await Usuario.findById(id);
 
         //Verifico que el usuario este activo.
-        const inactivo = await Usuario.findOne({ $and: [{ id }, { estado: false }] })
-        if (inactivo) {
+        if (!usuario.estado) {
             return res.json({
                 msg: `El usuario ${usuario.nombre} no existe`
             });
@@ -90,10 +89,10 @@ ctrlUsuario.deleteUser = async (req = request, res = response) => {
     const { id } = req.params;
     try {
         //Verifico que el usuario este activo
-        const inactivo = await Usuario.findOne({ $and: [{ id }, { estado: false }] });
+        const inactivo = await Usuario.findById(id);
 
         /* console.log(inactivo) */
-        if (inactivo) {
+        if (!inactivo.estado) {
             return res.json({
                 msg: `El usuario ${id} no existe`
             });

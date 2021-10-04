@@ -4,7 +4,7 @@ const { validarCampos } = require('../middlewares/validarCampos');
 
 const router = require('express').Router();
 
-router.get('/login', [
+router.post('/login', [
     check('nombre', 'El nombre de usuario es obligatorio').not().isEmpty(),
     check('contrasenia', 'La contraseña es obligatoria').not().isEmpty(),
     validarCampos

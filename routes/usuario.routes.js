@@ -62,7 +62,7 @@ router.put('/edit-user/:id', [
     check('contrasenia', 'El nombre de usuario debe tener como minimo 8 caracteres').isLength({ min: 8 }),
     check('correo', 'El correo no es válido').isEmail(),
     check('rol').custom(existeRol),
-    check('estado', 'El estado no es válido').isBoolean(),
+    //check('estado', 'El estado no es válido').isBoolean(),
     validarCampos
 ], editUser);
 
